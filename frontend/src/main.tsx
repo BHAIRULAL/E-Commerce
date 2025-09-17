@@ -9,9 +9,14 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import App from "./App.tsx";
+import Home from "./pages/Home.tsx";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<App />} />)
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route index={true} element={<Home />} />
+    </Route>
+  )
 );
 
 createRoot(document.getElementById("root")!).render(
