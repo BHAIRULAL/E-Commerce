@@ -1,0 +1,40 @@
+import type { ProductType } from "./types/Product";
+
+export const sampleProduct: ProductType[] = [
+  {
+    name: "Nike Slim Shirt",
+    slug: "nike-slim-shirt",
+    image: "../images/nike-shirt.webp",
+    brand: "Nike",
+    category: "Shirts",
+    description: "High quality shirt from nike",
+    price: 1500,
+    countInStock: 10,
+    rating: 4.5,
+    numReviews: 6,
+  },
+  {
+    name: "Adidas Slim Shirt",
+    slug: "adidas-slim-shirt",
+    image: "../images/adidas-shirt.avif",
+    brand: "Adidas",
+    category: "Shirts",
+    description: "High quality shirt from Adidas",
+    price: 1400,
+    countInStock: 30,
+    rating: 4.4,
+    numReviews: 4,
+  },
+  {
+    name: "Puma Slim Shirt",
+    slug: "puma-slim-shirt",
+    image: "../images/puma-pants.jpg",
+    brand: "Puma",
+    category: "Pants",
+    description: "High quality pant from puma",
+    price: 1100,
+    countInStock: 23,
+    rating: 4.1,
+    numReviews: 8,
+  },
+];
