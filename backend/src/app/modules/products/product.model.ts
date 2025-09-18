@@ -4,25 +4,33 @@ import { InventoryType, ProductType, VariantType } from "./product.interface";
 const VariantSchema = new Schema<VariantType>({
   type: String,
   value: String,
-});
+}, { _id: false });
 const InventorySchema = new Schema<InventoryType>({
   quantity: Number,
   inStock: Boolean,
-});
+}, { _id: false });
 
 const ProductSchema = new Schema<ProductType>({
   name: {
     type: String,
     required: true,
   },
-  brand: String,
-  image: String,
-  category: String,
-  description: String,
+  brand: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
   price: Number,
   tags: [String],
   variants: [VariantSchema],
   inventory: InventorySchema,
 });
 
-const Product = model("Product", ProductSchema);
+export const Product = model("Product", ProductSchema);
