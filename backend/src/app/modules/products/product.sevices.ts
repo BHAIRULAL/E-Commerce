@@ -1,8 +1,8 @@
 import { ProductType } from "./product.interface";
-import { Product } from "./product.model";
+import { ProductModel } from "./product.model";
 
 const createProductInDB = async (productData: ProductType) => {
-    const result = await Product.create(productData);
+    const result = await ProductModel.create(productData);
     return result;
 }
 
@@ -13,21 +13,21 @@ const getAllProductsFromDB = async (searchTerm = "") => {
             $options: "i"
         }
     } : {}
-    const result = await Product.find(query);
+    const result = await ProductModel.find(query);
     return result;
 }
 
 const getProductDetailsFromDB = async (id: string) => {
-    const result = await Product.findById(id);
+    const result = await ProductModel.findById(id);
     return result;
 }
 
 const updateProductDetailsInDB = async (id: string, data: ProductType) => {
-    const result = await Product.findByIdAndUpdate(id, data, { new: true });
+    const result = await ProductModel.findByIdAndUpdate(id, data, { new: true });
     return result;
 }
 const deleteProductFromDB = async (id: string) => {
-    const result = await Product.findByIdAndDelete(id);
+    const result = await ProductModel.findByIdAndDelete(id);
     return result;
 }
 
