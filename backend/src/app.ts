@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { ProductRoutes } from "./app/modules/products/product.routes";
+import { productRoutes } from "./app/modules/products/product.routes";
+import { orderRoutes } from "./app/modules/order/order.routes";
 const app = express();
 
 //parser options
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 //routes
-app.use("/api/products", ProductRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/order", orderRoutes);
 
 export default app;

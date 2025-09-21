@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import productValidationSchema from "./product.validation";
 import { productServices } from "./product.sevices";
+import { handleCatchErrors } from "../../utils/helperFunction";
+import { AppError } from "../../utils/types";
 
 const createProduct = async (req: Request, res: Response) => {
   try {
@@ -12,19 +14,8 @@ const createProduct = async (req: Request, res: Response) => {
       message: "Product added successfully",
       data: result,
     });
-
-  } catch (error: any) {
-    if (error.name === "ZodError") {
-      return res.status(400).json({
-        status: false,
-        message: error.errors.map((err: any) => err.message), // only show messages
-      });
-    }
-
-    return res.status(500).json({
-      status: false,
-      message: error.message || "Something went wrong",
-    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
   }
 };
 
@@ -32,22 +23,23 @@ const getAllProducts = async (req: Request, res: Response) => {
   try {
     const { searchTerm } = req.query;
 
-    const result = await productServices.getAllProductsFromDB(searchTerm as string);
+    const result = await productServices.getAllProductsFromDB(
+      searchTerm as string
+    );
 
     res.status(200).json({
       status: true,
       message: "Product list",
       data: result,
     });
-
-  } catch (error: any) {
-    return res.status(500).json({
-      status: false,
-      message: error.message || "Something went wrong",
-    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
   }
 };
-const getProductDetails = async (req: Request<{ productId: string }>, res: Response) => {
+const getProductDetails = async (
+  req: Request<{ productId: string }>,
+  res: Response
+) => {
   try {
     const { productId } = req.params;
     const result = await productServices.getProductDetailsFromDB(productId);
@@ -57,34 +49,35 @@ const getProductDetails = async (req: Request<{ productId: string }>, res: Respo
       message: "Product details",
       data: result,
     });
-
-  } catch (error: any) {
-    return res.status(500).json({
-      status: false,
-      message: error.message || "Something went wrong",
-    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
   }
 };
 
-const updateProductDetails = async (req: Request<{ productId: string }>, res: Response) => {
+const updateProductDetails = async (
+  req: Request<{ productId: string }>,
+  res: Response
+) => {
   try {
     const { productId } = req.params;
-    const result = await productServices.updateProductDetailsInDB(productId, req.body);
+    const result = await productServices.updateProductDetailsInDB(
+      productId,
+      req.body
+    );
 
     res.status(200).json({
       status: true,
       message: "Product details updated successfully",
       data: result,
     });
-
-  } catch (error: any) {
-    return res.status(500).json({
-      status: false,
-      message: error.message || "Something went wrong",
-    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
   }
-}
-const deleteProduct = async (req: Request<{ productId: string }>, res: Response) => {
+};
+const deleteProduct = async (
+  req: Request<{ productId: string }>,
+  res: Response
+) => {
   try {
     const { productId } = req.params;
     const result = await productServices.deleteProductFromDB(productId);
@@ -94,19 +87,15 @@ const deleteProduct = async (req: Request<{ productId: string }>, res: Response)
       message: "Product deleted successfully",
       data: result,
     });
-
-  } catch (error: any) {
-    return res.status(500).json({
-      status: false,
-      message: error.message || "Something went wrong",
-    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
   }
-}
+};
 
 export const productController = {
   createProduct,
   getAllProducts,
   getProductDetails,
   updateProductDetails,
-  deleteProduct
+  deleteProduct,
 };

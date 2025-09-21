@@ -3,5 +3,4 @@ export type OrderType = {
     productId: string;
     quantity: number
     price: number
-
 };
