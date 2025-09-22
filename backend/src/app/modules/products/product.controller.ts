@@ -74,6 +74,7 @@ const updateProductDetails = async (
     handleCatchErrors(error as AppError, res);
   }
 };
+
 const deleteProduct = async (
   req: Request<{ productId: string }>,
   res: Response

@@ -9,7 +9,13 @@ const createOrderInDB = async (
   const result = await OrderModel.create([orderData], { session });
   return result;
 };
+const getOrderListFromDB = async (email: string) => {
+  const query = email ? { email: email } : {};
+  const result = await OrderModel.find(query);
+  return result;
+};
 
 export const orderServices = {
   createOrderInDB,
+  getOrderListFromDB,
 };

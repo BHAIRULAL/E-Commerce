@@ -30,7 +30,7 @@ const createOrder = async (req: Request, res: Response) => {
         }
 
         if (product.inventory.quantity < quantity) {
-          throw Object.assign(new Error("Insufficient quantity"), {
+          throw Object.assign(new Error("Insufficient quantity in inventory"), {
             statusCode: 400,
           });
         }
@@ -56,6 +56,29 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+const orderList = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.query;
+    const result = await orderServices.getOrderListFromDB(email as string);
+
+    if (result.length === 0) {
+      return res.status(200).json({
+        status: true,
+        message: `No orders available for email: ${email}`,
+        data: [],
+      });
+    }
+    res.status(200).json({
+      status: true,
+      message: "Order list",
+      data: result,
+    });
+  } catch (error) {
+    handleCatchErrors(error as AppError, res);
+  }
+};
+
 export const orderController = {
   createOrder,
+  orderList,
 };
